@@ -1,13 +1,15 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, Modal, TextInput, Button, Alert} from 'react-native';
 import {THEME} from '../theme';
+import {AppButton} from './ui/AppButton'
 
 export const EditModal = ({visible, onCancel, value, onSave}) => {
   const [title, setTitle] = useState(value);
 
   const saveHandler = () => {
     if(title.trim().length < 3) {
-      Alert.alert('Error', `Minimum length name 3 character. Now ${title.trim().length}`)
+      Alert.alert('Error',
+        `Minimum length name 3 character. Now ${title.trim().length}`)
     } else {
       onSave(title)
     }
@@ -30,9 +32,13 @@ export const EditModal = ({visible, onCancel, value, onSave}) => {
           autoCorrect={false}
           maxLength={60}
         />
-        <View slyle={styles.buttons}>
-          <Button title="Cancel ✖" onPress={onCancel} color={THEME.DANGER_COLOR}/>
-          <Button title="Save ✅" onPress={saveHandler}/>
+        <View style={styles.buttons}>
+          <AppButton onPress={onCancel} color={THEME.DANGER_COLOR}>
+            Cancel
+          </AppButton>
+          <AppButton onPress={saveHandler}>
+            Save
+          </AppButton>
         </View>
       </View>
     </Modal>
@@ -54,6 +60,7 @@ const styles = StyleSheet.create({
   },
   buttons: {
     width: '100%',
+    marginTop: 10,
     flexDirection: 'row',
     justifyContent: 'space-around'
   }
