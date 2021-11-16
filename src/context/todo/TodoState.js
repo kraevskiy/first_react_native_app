@@ -13,6 +13,9 @@ import {
 } from '../types';
 import { ScreenContext } from '../screen/screenContext';
 import { Alert } from 'react-native';
+import { Http } from "../../http";
+
+const ERROR_TEXT = 'Something went wrong...'
 
 export const TodoState = ({ children }) => {
   const initialState = {
@@ -26,15 +29,13 @@ export const TodoState = ({ children }) => {
   const [state, dispatch] = useReducer(todoReducer, initialState)
 
   const addTodo = async title => {
-    const response = await fetch('https://react-native-todo-app-40f99-default-rtdb.firebaseio.com/todos.json', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ title })
-    })
-    const data = await response.json()
-    dispatch({ type: ADD_TODO, title, id: data.name })
+    try {
+      const url = 'https://react-native-todo-app-40f99-default-rtdb.firebaseio.com/todos.json'
+      const data = await Http.post(url, { title })
+      dispatch({ type: ADD_TODO, title, id: data.name })
+    } catch ( e ) {
+      showError(`${ERROR_TEXT} addTodo()`)
+    }
   }
 
   const removeTodo = id => {
@@ -52,13 +53,13 @@ export const TodoState = ({ children }) => {
           style: 'destructive',
           onPress: async () => {
             changeScreen(null)
-            await fetch(`https://react-native-todo-app-40f99-default-rtdb.firebaseio.com/todos/${id}.json`, {
-              method: 'DELETE',
-              headers: {
-                'Content-Type': 'application/json'
-              }
-            })
-            dispatch({ type: REMOVE_TODO, id })
+            try {
+              const url = `https://react-native-todo-app-40f99-default-rtdb.firebaseio.com/todos/${id}.json`
+              await Http.delete(url)
+              dispatch({ type: REMOVE_TODO, id })
+            } catch ( e ) {
+              showError(`${ERROR_TEXT} removeTodo()`)
+            }
           }
         }
       ],
@@ -76,17 +77,12 @@ export const TodoState = ({ children }) => {
     showLoader()
     clearError()
     try {
-      const response = await fetch('https://react-native-todo-app-40f99-default-rtdb.firebaseio.com/todos.json', {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-
-      const data = await response.json()
+      const url = 'https://react-native-todo-app-40f99-default-rtdb.firebaseio.com/todos.json'
+      const data = await Http.get(url)
       const todos = Object.keys(data).map(key => ({ ...data[key], id: key }))
       dispatch({ type: FETCH_TODOS, todos })
     } catch ( e ) {
-      showError('Something went wrong...')
+      showError(`${ERROR_TEXT} fetchTodos()`)
     } finally {
       hideLoader()
     }
@@ -95,16 +91,11 @@ export const TodoState = ({ children }) => {
   const updateTodo = async (id, title) => {
     clearError()
     try {
-      await fetch(`https://react-native-todo-app-40f99-default-rtdb.firebaseio.com/todos/${id}.json`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ title })
-      })
+      const url = `https://react-native-todo-app-40f99-default-rtdb.firebaseio.com/todos/${id}.json`
+      await Http.patch(url, { title })
       dispatch({ type: UPDATE_TODO, id, title })
     } catch ( e ) {
-      showError('Something went wrong...')
+      showError(`${ERROR_TEXT} updateTodo()`)
     }
   }
 
