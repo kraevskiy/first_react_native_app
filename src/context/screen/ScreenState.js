@@ -4,7 +4,7 @@ import { ScreenContext } from './screenContext';
 import { CHANGE_SCREEN } from '../types';
 
 export const ScreenState = ({ children }) => {
-  const [ state, dispatch ] = useReducer(screenReducer, null)
+  const [state, dispatch] = useReducer(screenReducer, null)
 
   const changeScreen = id => dispatch({ type: CHANGE_SCREEN, payload: id })
 

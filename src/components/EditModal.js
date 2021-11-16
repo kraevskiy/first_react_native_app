@@ -4,7 +4,7 @@ import { THEME } from '../theme';
 import { AppButton } from './ui/AppButton'
 
 export const EditModal = ({ visible, onCancel, value, onSave }) => {
-  const [ title, setTitle ] = useState(value);
+  const [title, setTitle] = useState(value);
 
   const saveHandler = () => {
     if ( title.trim().length < 3 ) {

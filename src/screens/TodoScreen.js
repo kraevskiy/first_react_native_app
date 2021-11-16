@@ -12,11 +12,11 @@ import { ScreenContext } from '../context/screen/screenContext';
 export const TodoScreen = () => {
   const { todos, updateTodo, removeTodo } = useContext(TodoContext)
   const { todoId, changeScreen } = useContext(ScreenContext)
-  const [ showModal, setShowModal ] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const todo = todos.find(t => t.id === todoId)
 
-  const saveHandler = (title) => {
-    updateTodo(todo.id, title)
+  const saveHandler = async (title) => {
+    await updateTodo(todo.id, title)
     setShowModal(false)
   }
 

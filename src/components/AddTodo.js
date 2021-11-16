@@ -4,7 +4,7 @@ import { THEME } from '../theme';
 import { AntDesign } from '@expo/vector-icons';
 
 export const AddTodo = ({ onSubmit }) => {
-  const [ value, setValue ] = useState('')
+  const [value, setValue] = useState('')
 
   const pressHandler = () => {
     if ( value.trim() ) {
