@@ -1,22 +1,22 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, Modal, TextInput, Button, Alert} from 'react-native';
-import {THEME} from '../theme';
-import {AppButton} from './ui/AppButton'
+import React, { useState } from 'react';
+import { View, StyleSheet, Modal, TextInput, Button, Alert } from 'react-native';
+import { THEME } from '../theme';
+import { AppButton } from './ui/AppButton'
 
-export const EditModal = ({visible, onCancel, value, onSave}) => {
-  const [title, setTitle] = useState(value);
+export const EditModal = ( { visible, onCancel, value, onSave } ) => {
+  const [ title, setTitle ] = useState( value );
 
   const saveHandler = () => {
-    if(title.trim().length < 3) {
-      Alert.alert('Error',
-        `Minimum length name 3 character. Now ${title.trim().length}`)
+    if ( title.trim().length < 3 ) {
+      Alert.alert( 'Error',
+        `Minimum length name 3 character. Now ${title.trim().length}` )
     } else {
-      onSave(title)
+      onSave( title )
     }
   }
 
   const cancelHandler = () => {
-    setTitle(value)
+    setTitle( value )
     onCancel()
   }
 
@@ -50,7 +50,7 @@ export const EditModal = ({visible, onCancel, value, onSave}) => {
   )
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create( {
   wrap: {
     flex: 1,
     justifyContent: 'center',
@@ -69,4 +69,4 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around'
   }
-});
+} );
