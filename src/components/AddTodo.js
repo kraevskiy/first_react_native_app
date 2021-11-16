@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TextInput, Alert, Keyboard } from 'react-native';
+import { Alert, Keyboard, StyleSheet, TextInput, View } from 'react-native';
 import { THEME } from '../theme';
 import { AntDesign } from '@expo/vector-icons';
 
-export const AddTodo = ( { onSubmit } ) => {
-  const [ value, setValue ] = useState( '' )
+export const AddTodo = ({ onSubmit }) => {
+  const [ value, setValue ] = useState('')
 
   const pressHandler = () => {
     if ( value.trim() ) {
-      onSubmit( value )
-      setValue( '' )
+      onSubmit(value)
+      setValue('')
       Keyboard.dismiss()
     } else {
-      Alert.alert( '🤔 Name was not to be empty!!!' )
+      Alert.alert('🤔 Name was not to be empty!!!')
     }
   }
 
@@ -36,7 +36,7 @@ export const AddTodo = ( { onSubmit } ) => {
   )
 }
 
-const styles = StyleSheet.create( {
+const styles = StyleSheet.create({
   block: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -50,4 +50,4 @@ const styles = StyleSheet.create( {
     borderBottomWidth: 2,
     borderBottomColor: THEME.MAIN_COLOR
   }
-} )
+})

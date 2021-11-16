@@ -8,7 +8,7 @@ import { TodoScreen } from './screens/TodoScreen';
 import { ScreenContext } from './context/screen/screenContext';
 
 export const MainLayout = () => {
-  const { todoId } = useContext( ScreenContext )
+  const { todoId } = useContext(ScreenContext)
 
   return (
     <View>
@@ -20,9 +20,9 @@ export const MainLayout = () => {
   )
 }
 
-const styles = StyleSheet.create( {
+const styles = StyleSheet.create({
   container: {
     paddingHorizontal: THEME.PADDING_HORIZONTAL,
     paddingVertical: 20
   }
-} );
+});
